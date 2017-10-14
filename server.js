@@ -1,6 +1,9 @@
 /* Showing Mongoose's "Populated" Method
  * =============================================== */
 
+ // mongo uri mongodb://heroku_p6wfczfl:ses5q25qoeal8tatoft9nlao1j@ds127260.mlab.com:27260/heroku_p6wfczfl
+ var port = "mongodb://heroku_p6wfczfl:ses5q25qoeal8tatoft9nlao1j@ds127260.mlab.com:27260/heroku_p6wfczfl";// || 3001;
+
 // Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -35,7 +38,8 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/newsScraper");
+//mongoose.connect("mongodb://localhost/newsScraper");
+mongoose.connect("mongodb://heroku_p6wfczfl:ses5q25qoeal8tatoft9nlao1j@ds127260.mlab.com:27260/heroku_p6wfczfl");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -321,6 +325,6 @@ app.get("/getComment/:id", function(req, res){
 });
 
 // Listen on port 3000
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log("App running on port 3000!");
 });
