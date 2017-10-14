@@ -22,7 +22,7 @@ $(document).ready(function(){
     //Mark selected article as read so it won't display
     $('.makeRead').click(function(){
         event.preventDefault();
-        alert("inside makeRead");
+        //alert("inside makeRead");
         
         thisId = this.value;
         console.log(thisId);

@@ -2,7 +2,8 @@
  * =============================================== */
 
  // mongo uri mongodb://heroku_p6wfczfl:ses5q25qoeal8tatoft9nlao1j@ds127260.mlab.com:27260/heroku_p6wfczfl
- var port = "mongodb://heroku_p6wfczfl:ses5q25qoeal8tatoft9nlao1j@ds127260.mlab.com:27260/heroku_p6wfczfl";// || 3001;
+ var port;
+port = process.env.PORT || 3000;
 
 // Dependencies
 var express = require("express");
