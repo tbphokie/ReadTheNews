@@ -11,7 +11,13 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    {{this.title}}
+                                                    {{this.title}} ({{this.source}})
+                                                        <div class="form-check">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input makeRead" type="checkbox" value="{{this._id}}">
+                                                                    Mark as read (will be hidden automatically)
+                                                            </label>
+                                                        </div>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -19,13 +25,22 @@
                                                     <img src='{{this.image}}'>
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    Summary: {{this.summary}}<br>
-                                                    Author: {{this.author}}<br>
-                                                    Dateline: {{this.dateline}}<br>
+                                                    {{#if this.summary}}
+                                                        Summary: {{this.summary}}<br>
+                                                    {{/if}}
+                                                    {{#if this.author}}
+                                                        Author: {{this.author}}<br>
+                                                    {{/if}}
+                                                    {{#if this.dateline}}
+                                                        Dateline: {{this.dateline}}<br>
+                                                    {{/if}}
                                                     <a href="{{this.link}}">Full article</a><br>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <button type="submit" class="makeComment" value='{{this._id}}'>Comment</button>
+                                                    <!-- Button trigger comment modal -->
+                                                    <button type="button" class="btn btn-primary btn-sm makeComment" data-toggle="modal" data-target="#commentModal" value='{{this._id}}'>
+                                                        Comment
+                                                    </button>
                                                 </div>
                                             </div>
                                             {{#if this.comment}}

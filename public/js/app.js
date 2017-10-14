@@ -1,12 +1,15 @@
 $(document).ready(function(){
+    //Make the id global to make sure we have the current id at all times
+    var thisId = 1;
+    var commentId = 1;
     $('#newsSource a').on('click', function(){
-        var thisId = this.id;
-        console.log("Id of button: ", this.id);
+        filter = this.id;
+        console.log("Id of button: ", filter);
 
         // Now make an ajax call for the articles
         $.ajax({
             method: "GET",
-            url: "/scrape" + thisId
+            url: "/scrape" + filter
         })
         // With that done, add the note information to the page
         .done(function(data){
@@ -16,15 +19,52 @@ $(document).ready(function(){
         });
     });
 
-    //Open modal to get users comment
-    $('.makeComment').on('click', function(){
+    //Mark selected article as read so it won't display
+    $('.makeRead').click(function(){
         event.preventDefault();
-
-        var thisId = this.value;
+        alert("inside makeRead");
+        
+        thisId = this.value;
         console.log(thisId);
 
+        $.ajax({
+            method: "POST",
+            url:  "/articleRead/"+thisId
+        })
+        .done(function(data){
+            window.location = "/";
+        });
+    });
+
+    //Open modal to get users comment and Grab id before modal opens and get current comment if it exists
+    $('.makeComment').on('click', function(){
+        event.preventDefault();
+        
+        thisId = this.value;
+        console.log(thisId);
+
+        $.ajax({
+            method: "GET",
+            url: "/getComment/"+thisId,
+        })
+        .done(function(comment){
+            console.log("COMMENT    : ", comment.text);
+            $('#curComments').text(comment.text);
+            commentId = comment._id;
+        })        
+    });
+
+    //save new comment
+    $('#addComment').on('click', function(){
+        event.preventDefault();
+
+        var comment = $('#curComments').val();
+
+        console.log(thisId);
+        console.log("Comment: ", comment);
+
         var note = {
-            text:"testing"
+            text: comment
         }
         $.ajax({
             method: "POST",
@@ -37,7 +77,21 @@ $(document).ready(function(){
         })
     });
 
-    //save users comment
+    //delete comment
+    $('#deleteComment').on('click', function(){
+        event.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/deleteComment/"+commentId
+        })
+        .done(function(data){
+            console.log("DATA:", data);
+            window.location = "/";
+        })
+
+    });
+
+/*    //save users comment
     $('#submitComment').on('click', function(){
         event.preventDefault();
 
@@ -55,5 +109,6 @@ $(document).ready(function(){
         .done(function(data){
             window.location = "/";
         })
-    });   
+    }); 
+*/  
 });
